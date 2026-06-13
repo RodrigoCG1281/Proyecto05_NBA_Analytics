@@ -1,0 +1,18 @@
+# Descartar archivos de configuración locales del sistema
+.env
+
+# Descartar logs y datos temporales de Airflow que se generen localmente
+.astro/
+logs/
+airflow.cfg
+airflow.db
+webserver_config.py
+
+# Descartar los archivos de datos reales descargados (opcional, pero recomendado para Git limpio)
+# data/*.parquet   # Descomenta esto si prefieres que los .parquet pesados no vayan a GitHub
+
+# Carpetas de entorno virtual o Python por si acaso
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
