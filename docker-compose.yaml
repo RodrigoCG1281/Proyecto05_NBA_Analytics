@@ -1,5 +1,5 @@
 x-airflow-common: &airflow-common
-  image: apache/airflow:2.8.1-python3.10
+  build: .  # <--- CORRECTO: Docker leerá el "Dockerfile" que creaste en la raíz
   environment:
     - AIRFLOW__CORE__EXECUTOR=LocalExecutor
     - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/airflow_db
@@ -9,7 +9,6 @@ x-airflow-common: &airflow-common
     - AIRFLOW__CORE__DONOT_PICKLE=True  
     - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
     - AIRFLOW_CONN_POSTGRES_NBA=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-    - _PIP_ADDITIONAL_REQUIREMENTS=pandas pyarrow fastparquet requests psycopg2-binary nba_api
   volumes:
     - ./dags:/opt/airflow/dags
     - ./data:/opt/airflow/data

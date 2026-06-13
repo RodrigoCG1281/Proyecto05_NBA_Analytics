@@ -41,7 +41,7 @@ docker compose run --rm airflow-webserver airflow users create \
 
 # 7. Levantar todos los servicios en segundo plano
 echo -e "${GREEN}==> Levantando todos los servicios en Docker...${NC}"
-docker compose up -d
+docker compose up -d --build
 
 echo -e "${GREEN}==================================================================${NC}"
 echo -e "${GREEN}¡Todo listo! El ecosistema está corriendo sin configuraciones manuales.${NC}"
