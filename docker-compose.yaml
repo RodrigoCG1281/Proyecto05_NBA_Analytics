@@ -6,12 +6,15 @@ x-airflow-common: &airflow-common
     - AIRFLOW__DATABASE__SQL_ALCHEMY_CONN=postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/airflow_db
     - AIRFLOW__CORE__LOAD_EXAMPLES=False
     - AIRFLOW__CORE__FERNET_KEY=${AIRFLOW_FERNET_KEY}
-    - AIRFLOW__CORE__DONOT_PICKLE=True  
+    - AIRFLOW__CORE__DONOT_PICKLE=True
     - AIRFLOW__WEBSERVER__EXPOSE_CONFIG=True
     - AIRFLOW_CONN_POSTGRES_NBA=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+    - PYTHONPATH=/opt/airflow/src
+    - BALLDONTLIE_API_KEY=${BALLDONTLIE_API_KEY}
   volumes:
     - ./dags:/opt/airflow/dags
     - ./data:/opt/airflow/data
+    - ./src:/opt/airflow/src
   depends_on:
     - postgres
 

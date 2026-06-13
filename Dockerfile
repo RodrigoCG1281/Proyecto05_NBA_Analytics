@@ -7,5 +7,4 @@ RUN pip install --no-cache-dir \
     pyarrow \
     fastparquet \
     requests \
-    psycopg2-binary \
-    nba_api
+    psycopg2-binary
