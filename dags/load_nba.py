@@ -201,6 +201,14 @@ def load_nba():
         dim = pd.read_parquet(DIM_GAME_PQ)
         fact = pd.read_parquet(FACT_PLAYER_PQ)
 
+        # Limpiar tablas antes de insertar (evita duplicados en re-ejecuciones)
+        import sqlalchemy
+        with engine.begin() as conn:
+            conn.execute(sqlalchemy.text(
+                "TRUNCATE TABLE fact_team_game, fact_player_stats, dim_game RESTART IDENTITY CASCADE"
+            ))
+        logger.info("Tablas truncadas correctamente.")
+
         # Cargar dimensiones primero
         dim.to_sql("dim_game", con=engine, if_exists="append", index=False)
         logger.info("Cargado dim_game (%d filas)", len(dim))

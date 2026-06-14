@@ -1,0 +1,9 @@
+# Dependencias para correr generate_historical_parquets.py localmente.
+# NO instalar en Docker — solo en tu maquina Windows.
+#
+# Instalar con:
+#   pip install -r requirements_local.txt
+
+nba_api>=1.4.1
+pandas>=1.5.0
+pyarrow>=10.0.0
