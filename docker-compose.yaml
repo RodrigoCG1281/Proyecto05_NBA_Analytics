@@ -56,5 +56,20 @@ services:
     depends_on:
       - postgres
 
+  jupyter:
+    image: jupyter/base-notebook:python-3.11
+    container_name: nba_analysis
+    depends_on:
+      postgres:
+        condition: service_started
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/home/jovyan/work
+    working_dir: /home/jovyan/work
+    command: >
+      bash -c "pip install sqlalchemy pymysql ipython-sql python-dotenv pandas prettytable==3.10.2
+      && start-notebook.py --NotebookApp.token='' --NotebookApp.password=''"
+
 volumes:
   postgres_data:
