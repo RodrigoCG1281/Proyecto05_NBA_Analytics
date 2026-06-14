@@ -217,3 +217,13 @@ docker compose exec postgres psql -U postgres -d nba_analytics -c "SELECT * FROM
 docker compose exec postgres psql -U postgres -d nba_analytics -c "SELECT * FROM fact_team_game LIMIT 5;"
 docker compose exec postgres psql -U postgres -d nba_analytics -c "SELECT * FROM fact_player_stats LIMIT 5;"
 ```
+
+### Abrir Jupyter Notebook:
+```
+  http://localhost:8888
+```
+
+### Ejecutar el archivo 
+```
+nba_analysis.ipynb
+```
