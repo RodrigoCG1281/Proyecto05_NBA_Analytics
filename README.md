@@ -178,3 +178,42 @@ Resultado esperado para `2024-01-15`:
    1630224  0022300555     Jalen Green      20
  ...
 ```
+
+---
+
+## 4. DAG de Carga (`load_nba`)
+
+Construye el modelo analítico final y carga los datos en PostgreSQL.
+
+### Flujo
+
+```
+combine_data ──> dim_game.parquet
+             └──> fact_player_stats.parquet
+             └──> load_postgres ──> dim_game
+                                 └──> fact_player_stats
+                                 └──> fact_team_game
+```
+
+### Archivos importantes
+
+| Archivo | Descripción |
+| :--- | :--- |
+| `dags/load_nba.py` | DAG de Airflow — construye y carga `dim_game`, `fact_player_stats` y `fact_team_game` |
+| `scripts/init-db.sql` | Esquema de base de datos inicial con las tablas `dim_game`, `fact_team_game` y `fact_player_stats` |
+
+### Tablas en PostgreSQL
+
+| Tabla | Descripción |
+| :--- | :--- |
+| `dim_game` | Dimensión de partidos con `game_id`, `date`, `winner`, `home_team`, `away_team` |
+| `fact_team_game` | Hecho de equipos por partido con `game_id`, `team`, `result`, `date` |
+| `fact_player_stats` | Hecho de estadísticas de jugadores con `player_id`, `game_id`, `player_name`, `points` |
+
+### Verificación
+
+```bash
+docker compose exec postgres psql -U postgres -d nba_analytics -c "SELECT * FROM dim_game LIMIT 5;"
+docker compose exec postgres psql -U postgres -d nba_analytics -c "SELECT * FROM fact_team_game LIMIT 5;"
+docker compose exec postgres psql -U postgres -d nba_analytics -c "SELECT * FROM fact_player_stats LIMIT 5;"
+```
