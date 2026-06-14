@@ -13,7 +13,19 @@ CREATE TABLE IF NOT EXISTS dim_game (
     away_team VARCHAR(50)
 );
 
--- 4. Crear la tabla de Hechos de Estadísticas de Jugadores
+-- 4. Crear la tabla de Hechos de Equipos por Partido
+CREATE TABLE IF NOT EXISTS fact_team_game (
+    game_id VARCHAR(50) NOT NULL,
+    team VARCHAR(50) NOT NULL,
+    result CHAR(1) NOT NULL,  -- 'W' = Win, 'L' = Loss
+    date DATE NOT NULL,
+    PRIMARY KEY (game_id, team),
+    CONSTRAINT fk_game
+        FOREIGN KEY (game_id)
+        REFERENCES dim_game(game_id)
+);
+
+-- 5. Crear la tabla de Hechos de Estadísticas de Jugadores
 CREATE TABLE IF NOT EXISTS fact_player_stats (
     player_id VARCHAR(50),
     game_id VARCHAR(50),
